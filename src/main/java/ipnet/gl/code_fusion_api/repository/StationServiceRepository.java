@@ -24,4 +24,12 @@ public interface StationServiceRepository extends JpaRepository<StationService, 
         return findAll();
     }
 
+    //Les points de vente par transaction, par type de transaction, classés par montant
+    @Query("SELECT ss, SUM(t.montant) FROM Transaction t " +
+            "JOIN t.stationService ss " +
+            "WHERE t.type = :type " +
+            "GROUP BY ss " +
+            "ORDER BY SUM(t.montant) DESC")
+    List<StationService> findSalesPointsByTransactionTypeOrderedByAmount(@Param("type") String type);
+
 }

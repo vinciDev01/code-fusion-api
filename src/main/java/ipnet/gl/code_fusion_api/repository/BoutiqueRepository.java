@@ -16,12 +16,20 @@ public interface BoutiqueRepository extends JpaRepository<Boutique, Long> {
     Optional<Boutique> findByTrackingId(UUID trackingId);
     
     boolean existsByTrackingId(UUID trackingId);
-    
-    
-    
+
     // Méthode de recherche par défaut si aucun champ recherchable n'est défini
     default List<Boutique> search(String searchTerm) {
         return findAll();
     }
+
+    //Les points de vente par transaction, par type de transaction, classés par montant
+    @Query("SELECT b, SUM(t.montant) FROM Transaction t " +
+            "JOIN t.boutique b " +
+            "WHERE t.type = :type " +
+            "GROUP BY b " +
+            "ORDER BY SUM(t.montant) DESC")
+    List<Boutique> findSalesPointsByBoutiqueOrderedByAmount(@Param("type") String type);
+
+
 
 }

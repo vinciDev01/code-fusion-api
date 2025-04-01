@@ -1,5 +1,6 @@
 package ipnet.gl.code_fusion_api.service.impl;
 
+import ipnet.gl.code_fusion_api.enums.TypeTransaction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -30,8 +31,16 @@ public class TransactionServiceImpl implements TransactionService {
     public TransactionResponse create(TransactionRequest request) {
         Transaction entity = mapper.toEntity(request);
         entity.setTrackingId(UUID.randomUUID());
-        Transaction savedEntity = repository.save(entity);
-        return mapper.toResponse(savedEntity);
+        if(entity.getType() == TypeTransaction.APPROVISIONNEMENT && entity.getMarqueteur() != null ){
+            Transaction savedEntity = repository.save(entity);
+            return mapper.toResponse(savedEntity);
+        } else if (entity.getType() == TypeTransaction.APPROVISIONNEMENT && entity.getMarqueteur() == null) {
+            new RuntimeException("Erreur de l'enregistrement de la transaction la marqueteur et obligatoire");
+        }else{
+            Transaction savedEntity = repository.save(entity);
+            return mapper.toResponse(savedEntity);
+        }
+        return null;
     }
     
     @Override

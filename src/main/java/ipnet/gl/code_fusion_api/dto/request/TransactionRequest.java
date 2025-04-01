@@ -25,9 +25,9 @@ public class TransactionRequest {
     private TypeTransaction type;
     private StatutTransaction statut;
     private StationService stationService;
-    private Restaurant restaurant;
-    private Boutique boutique;
-    private Marqueteur marqueteur;
+    private String restaurantTrackingId;
+    private String boutiqueTrackingId;
+    private String marqueteurTrackingId;
     
     // Constructeur par défaut
     public TransactionRequest() {
@@ -83,25 +83,37 @@ public class TransactionRequest {
     public void setStationservice(StationService stationService) {
         this.stationService = stationService;
     }
-    public Restaurant getRestaurant() {
-        return restaurant;
+
+    public StationService getStationService() {
+        return stationService;
+    }
+
+    public void setStationService(StationService stationService) {
+        this.stationService = stationService;
+    }
+
+    public String getRestaurantTrackingId() {
+        return restaurantTrackingId;
+    }
+
+    public void setRestaurantTrackingId(String restaurantTrackingId) {
+        this.restaurantTrackingId = restaurantTrackingId;
+    }
+
+    public String getBoutiqueTrackingId() {
+        return boutiqueTrackingId;
+    }
+
+    public void setBoutiqueTrackingId(String boutiqueTrackingId) {
+        this.boutiqueTrackingId = boutiqueTrackingId;
+    }
+
+    public String getMarqueteurTrackingId() {
+        return marqueteurTrackingId;
+    }
+
+    public void setMarqueteurTrackingId(String marqueteurTrackingId) {
+        this.marqueteurTrackingId = marqueteurTrackingId;
     }
     
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
-    public Boutique getBoutique() {
-        return boutique;
-    }
-    
-    public void setBoutique(Boutique boutique) {
-        this.boutique = boutique;
-    }
-    public Marqueteur getMarqueteur() {
-        return marqueteur;
-    }
-    
-    public void setMarqueteur(Marqueteur marqueteur) {
-        this.marqueteur = marqueteur;
-    }
 } 

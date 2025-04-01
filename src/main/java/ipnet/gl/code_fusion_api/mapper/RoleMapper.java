@@ -2,7 +2,6 @@ package ipnet.gl.code_fusion_api.mapper;
 
 import org.springframework.stereotype.Component;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import ipnet.gl.code_fusion_api.dto.request.RoleRequest;
@@ -27,7 +26,7 @@ public class RoleMapper {
         
         // Mapping des attributs standard
         try {
-            response.setRoleTrackingId(entity.getTrackingId());
+            response.setPermissionTrackingId(entity.getTrackingId());
         } catch (Exception e) {
             // Ignore si le getter n'existe pas
         }
@@ -45,7 +44,7 @@ public class RoleMapper {
         // Mapping des relations avec seulement les informations nécessaires
         if (entity.getPermission() != null) {
             // On récupère le trackingId pour référence
-            response.setRoleTrackingId(entity.getPermission().getTrackingId());
+            response.setPermissionTrackingId(entity.getPermission().getTrackingId());
             
             // Mapping des champs personnalisés sélectionnés
             try {

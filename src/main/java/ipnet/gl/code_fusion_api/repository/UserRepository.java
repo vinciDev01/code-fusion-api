@@ -19,6 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     boolean existsByEmail(String email);
     
+    boolean existsByNom(String nom);
+    
     /**
      * Recherche des utilisateurs par prénom, nom, email, ou numéro de téléphone
      * @param keyword le terme de recherche

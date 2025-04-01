@@ -7,11 +7,24 @@ import java.util.stream.Collectors;
 
 import ipnet.gl.code_fusion_api.dto.request.TransactionRequest;
 import ipnet.gl.code_fusion_api.dto.response.TransactionResponse;
+import ipnet.gl.code_fusion_api.entity.Boutique;
 import ipnet.gl.code_fusion_api.entity.Transaction;
+import ipnet.gl.code_fusion_api.repository.BoutiqueRepository;
+import ipnet.gl.code_fusion_api.repository.MarqueteurRepository;
+import ipnet.gl.code_fusion_api.repository.RestaurantRepository;
 
 @Component
 public class TransactionMapper {
     
+    private final RestaurantRepository restaurantRepository;
+    private final BoutiqueRepository boutiqueRepository;
+    private final MarqueteurRepository marqueteurRepository;
+    
+    public TransactionMapper(RestaurantRepository restaurantRepository, BoutiqueRepository boutiqueRepository, MarqueteurRepository marqueteurRepository) {
+        this.restaurantRepository = restaurantRepository;
+        this.boutiqueRepository = boutiqueRepository;
+        this.marqueteurRepository = marqueteurRepository;
+    }
     /**
      * Convertit une entité en DTO de réponse
      * Ne transfère que les données nécessaires pour la présentation au frontend
@@ -218,17 +231,17 @@ public class TransactionMapper {
             // Ignore si le setter n'existe pas
         }
         try {
-            entity.setRestaurant(request.getRestaurant());
+            entity.setRestaurant(restaurantRepository.findByTrackingId(UUID.fromString(request.getRestaurantTrackingId())).orElseThrow(() -> new RuntimeException("Restaurant non trouvé")));
         } catch (Exception e) {
             // Ignore si le setter n'existe pas
         }
         try {
-            entity.setBoutique(request.getBoutique());
+            entity.setBoutique(boutiqueRepository.findByTrackingId(UUID.fromString(request.getBoutiqueTrackingId())).orElseThrow(() -> new RuntimeException("Boutique non trouvé")));
         } catch (Exception e) {
             // Ignore si le setter n'existe pas
         }
         try {
-            entity.setMarqueteur(request.getMarqueteur());
+            entity.setMarqueteur(marqueteurRepository.findByTrackingId(UUID.fromString(request.getMarqueteurTrackingId())).orElseThrow(() -> new RuntimeException("Marqueteur non trouvé")));
         } catch (Exception e) {
             // Ignore si le setter n'existe pas
         }
@@ -282,17 +295,17 @@ public class TransactionMapper {
             // Ignore si le setter n'existe pas
         }
         try {
-            entity.setRestaurant(request.getRestaurant());
+            entity.setRestaurant(restaurantRepository.findByTrackingId(UUID.fromString(request.getRestaurantTrackingId())).orElseThrow(() -> new RuntimeException("Restaurant non trouvé")));
         } catch (Exception e) {
             // Ignore si le setter n'existe pas
         }
         try {
-            entity.setBoutique(request.getBoutique());
+            entity.setBoutique(boutiqueRepository.findByTrackingId(UUID.fromString(request.getBoutiqueTrackingId())).orElseThrow(() -> new RuntimeException("Boutique non trouvé")));
         } catch (Exception e) {
             // Ignore si le setter n'existe pas
         }
         try {
-            entity.setMarqueteur(request.getMarqueteur());
+            entity.setMarqueteur(marqueteurRepository.findByTrackingId(UUID.fromString(request.getMarqueteurTrackingId())).orElseThrow(() -> new RuntimeException("Marqueteur non trouvé")));
         } catch (Exception e) {
             // Ignore si le setter n'existe pas
         }

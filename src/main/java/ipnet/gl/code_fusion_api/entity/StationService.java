@@ -9,7 +9,7 @@ import java.util.UUID;
 @Entity
 @Table
 @EntityListeners(AuditingEntityListener.class)
-public class StationService implements Serializable {
+public class StationService  extends PointDeVente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,6 +3,8 @@ package ipnet.gl.code_fusion_api.entity;
 import jakarta.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import ipnet.gl.code_fusion_api.utils.AuditTable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.UUID;
 @Entity
 @Table
 @EntityListeners(AuditingEntityListener.class)
-public class Marqueteur implements Serializable {
+public class Marqueteur extends AuditTable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Table
-public class Produit implements Serializable {
+public class Produit extends PointDeVente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class Produit implements Serializable {
     private Double prixVente;
 
     private Double prixAchat;
-
+    
     @ManyToOne
     @JoinColumn(name = "marqueter_id")
     private Marqueteur marqueter;

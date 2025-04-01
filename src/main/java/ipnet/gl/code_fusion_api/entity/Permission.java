@@ -3,13 +3,15 @@ package ipnet.gl.code_fusion_api.entity;
 import jakarta.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import ipnet.gl.code_fusion_api.utils.AuditTable;
+
 import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
 @Table
 @EntityListeners(AuditingEntityListener.class)
-public class Permission implements Serializable {
+public class Permission extends AuditTable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,10 +3,13 @@ package ipnet.gl.code_fusion_api.entity;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Transient;
 
+import java.io.Serializable;
 import java.util.UUID;
 
+import ipnet.gl.code_fusion_api.utils.AuditTable;
+
 @MappedSuperclass
-public abstract class PointDeVente {
+public abstract class PointDeVente  extends AuditTable implements Serializable {
 
     private UUID trackingId;
 

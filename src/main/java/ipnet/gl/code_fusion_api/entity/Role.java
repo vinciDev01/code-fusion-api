@@ -3,13 +3,15 @@ package ipnet.gl.code_fusion_api.entity;
 import jakarta.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import ipnet.gl.code_fusion_api.utils.AuditTable;
+
 import java.io.Serializable;
 import java.util.UUID;
 
 @Table
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Role implements Serializable {
+public class Role extends AuditTable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,17 +22,10 @@ public class Role implements Serializable {
     private String nom;
 
     @ManyToOne
-    @JoinColumn(name = "role_id", nullable = true)
-    private Role role;
+    @JoinColumn(name = "permission_id", nullable = true)
+    private Permission permission;
 
     public Role() {
-    }
-
-    public Role(Long id, UUID trackingId, String nom, Role role) {
-        this.id = id;
-        this.trackingId = trackingId;
-        this.nom = nom;
-        this.role = role;
     }
 
     public Long getId() {
@@ -57,11 +52,21 @@ public class Role implements Serializable {
         this.nom = nom;
     }
 
-    public Role getRole() {
-        return role;
-    }
+    public Permission getPermission() {
+		return permission;
+	}
+    
+    public void setPermission(Permission permission) {
+		this.permission = permission;
+	}
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+	@Override
+	public String toString() {
+		return "Role{" +
+				"id=" + id +
+				", trackingId=" + trackingId +
+				", nom='" + nom + '\'' +
+				'}';
+	}
+    
 }

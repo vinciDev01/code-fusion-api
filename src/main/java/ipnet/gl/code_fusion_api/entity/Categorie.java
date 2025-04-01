@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
+import ipnet.gl.code_fusion_api.utils.AuditTable;
+
 @Entity
 @Table
-public class Categorie implements Serializable {
+public class Categorie extends AuditTable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

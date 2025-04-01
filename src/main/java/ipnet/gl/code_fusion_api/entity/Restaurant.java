@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Entity
 @Table
 @EntityListeners(AuditingEntityListener.class)
-public class Restaurant implements Serializable {
+public class Restaurant extends PointDeVente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,3 +1,7 @@
+// Cette classe est dépréciée et ne doit plus être utilisée.
+// Utilisez JwtUtil à la place.
+// À supprimer après confirmation du bon fonctionnement de l'application.
+
 package ipnet.gl.code_fusion_api.security;
 
 import io.jsonwebtoken.*;
@@ -17,10 +21,10 @@ import java.util.Date;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("${app.jwt.secret:defaultSecretKeyWhichIsLongEnoughForHS512Algorithm}")
+    @Value("${jwt.secret}")
     private String jwtSecret;
 
-    @Value("${app.jwt.expiration:86400000}")
+    @Value("${jwt.expiration}")
     private int jwtExpirationMs;
 
     public String generateJwtToken(Authentication authentication) {
@@ -29,8 +33,8 @@ public class JwtUtils {
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(key(), SignatureAlgorithm.HS512)
+                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs * 1000L))
+                .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
     }
     

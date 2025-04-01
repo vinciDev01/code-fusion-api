@@ -5,7 +5,10 @@ import ipnet.gl.code_fusion_api.security.UserDetailsImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,18 +22,25 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
+    private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
-    @Value("${jwt.secret:defaultSecretKeyWhichIsLongEnoughForHS512Algorithm}")
+    @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jwt.expiration:3600}")
+    @Value("${jwt.expiration}")
     private Long expiration;
     
-    @Value("${jwt.refresh-expiration:86400}")
+    @Value("${jwt.refresh-expiration}")
     private Long refreshExpiration;
     
     private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(secret.getBytes());
+        try {
+            byte[] keyBytes = Decoders.BASE64.decode(secret);
+            return Keys.hmacShaKeyFor(keyBytes);
+        } catch (Exception e) {
+            logger.error("Erreur lors du décodage de la clé secrète JWT: {}", e.getMessage());
+            throw new RuntimeException("Erreur de configuration JWT", e);
+        }
     }
     
     public String generateAccessToken(Authentication authentication) {
@@ -58,13 +68,18 @@ public class JwtUtil {
     }
     
     private String createToken(Map<String, Object> claims, String subject, Long expiration) {
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
-                .compact();
+        try {
+            return Jwts.builder()
+                    .setClaims(claims)
+                    .setSubject(subject)
+                    .setIssuedAt(new Date(System.currentTimeMillis()))
+                    .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
+                    .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                    .compact();
+        } catch (Exception e) {
+            logger.error("Erreur lors de la création du token JWT: {}", e.getMessage());
+            throw new RuntimeException("Erreur de génération de token", e);
+        }
     }
     
     public String extractUsername(String token) {
@@ -81,15 +96,25 @@ public class JwtUtil {
     }
     
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            logger.error("Erreur lors de l'extraction des claims JWT: {}", e.getMessage());
+            throw e;
+        }
     }
     
     public Boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+        try {
+            return extractExpiration(token).before(new Date());
+        } catch (Exception e) {
+            logger.error("Erreur lors de la vérification de l'expiration du token: {}", e.getMessage());
+            return true;
+        }
     }
     
     public Long getAccessTokenExpirationInSeconds() {
@@ -97,7 +122,22 @@ public class JwtUtil {
     }
     
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        try {
+            final String username = extractUsername(token);
+            return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        } catch (Exception e) {
+            logger.error("Erreur lors de la validation du token JWT: {}", e.getMessage());
+            return false;
+        }
+    }
+    
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            logger.error("JWT token invalide: {}", e.getMessage());
+            return false;
+        }
     }
 }

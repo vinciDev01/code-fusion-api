@@ -2,11 +2,6 @@ package ipnet.gl.code_fusion_api.dto.response;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-import java.util.List;
-import java.util.List;
-import java.time.LocalDateTime;
-import ipnet.gl.code_fusion_api.entity.Role;
-import java.util.UUID;
 
 /**
  * DTO pour retourner les données de l'entité Role au frontend.
@@ -22,7 +17,7 @@ public class RoleResponse {
     
     // Attributs relationnels avec seulement les champs nécessaires
     // Relation ManyToOne - retourne uniquement les champs sélectionnés
-    private UUID roleTrackingId;
+    private UUID permissionTrackingId;
     private String permissionLibelle; // Champ personnalisé sélectionné par l'utilisateur
     
     // Métadonnées
@@ -51,12 +46,12 @@ public class RoleResponse {
     }
     
     
-    public UUID getRoleTrackingId() {
-        return roleTrackingId;
+    public UUID getPermissionTrackingId() {
+        return permissionTrackingId;
     }
     
-    public void setRoleTrackingId(UUID roleTrackingId) {
-        this.roleTrackingId = roleTrackingId;
+    public void setPermissionTrackingId(UUID permissionTrackingId) {
+        this.permissionTrackingId = permissionTrackingId;
     }
     
     

@@ -13,7 +13,6 @@ import java.util.UUID;
 public class RoleRequest {
     
     private String nom;
-    private Role role;
     
     // Constructeur par défaut
     public RoleRequest() {
@@ -27,11 +26,5 @@ public class RoleRequest {
     public void setNom(String nom) {
         this.nom = nom;
     }
-    public Role getRole() {
-        return role;
-    }
-    
-    public void setRole(Role role) {
-        this.role = role;
-    }
+
 } 

@@ -15,9 +15,7 @@ import java.util.UUID;
 public class BoutiqueResponse {
     // Identifiant public exposé au frontend (jamais l'ID interne de la base de données)
     private UUID trackingId;
-    
-    
-    
+
     // Métadonnées
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

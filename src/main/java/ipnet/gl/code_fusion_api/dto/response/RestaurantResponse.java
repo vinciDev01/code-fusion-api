@@ -16,8 +16,6 @@ public class RestaurantResponse {
     // Identifiant public exposé au frontend (jamais l'ID interne de la base de données)
     private UUID trackingId;
     
-    
-    
     // Métadonnées
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

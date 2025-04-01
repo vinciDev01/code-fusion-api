@@ -24,7 +24,7 @@ public class TransactionRequest {
     private String description;
     private TypeTransaction type;
     private StatutTransaction statut;
-    private StationService stationService;
+    private String stationServiceTrackingId;
     private String restaurantTrackingId;
     private String boutiqueTrackingId;
     private String marqueteurTrackingId;
@@ -76,21 +76,7 @@ public class TransactionRequest {
     public void setStatut(StatutTransaction statut) {
         this.statut = statut;
     }
-    public StationService getStationservice() {
-        return stationService;
-    }
     
-    public void setStationservice(StationService stationService) {
-        this.stationService = stationService;
-    }
-
-    public StationService getStationService() {
-        return stationService;
-    }
-
-    public void setStationService(StationService stationService) {
-        this.stationService = stationService;
-    }
 
     public String getRestaurantTrackingId() {
         return restaurantTrackingId;
@@ -114,6 +100,14 @@ public class TransactionRequest {
 
     public void setMarqueteurTrackingId(String marqueteurTrackingId) {
         this.marqueteurTrackingId = marqueteurTrackingId;
+    }
+
+    public String getStationServiceTrackingId() {
+        return stationServiceTrackingId;
+    }
+
+    public void setStationServiceTrackingId(String stationServiceTrackingId) {
+        this.stationServiceTrackingId = stationServiceTrackingId;
     }
     
 } 

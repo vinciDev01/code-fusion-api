@@ -12,6 +12,7 @@ import ipnet.gl.code_fusion_api.entity.Transaction;
 import ipnet.gl.code_fusion_api.repository.BoutiqueRepository;
 import ipnet.gl.code_fusion_api.repository.MarqueteurRepository;
 import ipnet.gl.code_fusion_api.repository.RestaurantRepository;
+import ipnet.gl.code_fusion_api.repository.StationServiceRepository;
 
 @Component
 public class TransactionMapper {
@@ -19,11 +20,14 @@ public class TransactionMapper {
     private final RestaurantRepository restaurantRepository;
     private final BoutiqueRepository boutiqueRepository;
     private final MarqueteurRepository marqueteurRepository;
+    private final StationServiceRepository stationServiceRepository;
     
-    public TransactionMapper(RestaurantRepository restaurantRepository, BoutiqueRepository boutiqueRepository, MarqueteurRepository marqueteurRepository) {
+
+    public TransactionMapper(RestaurantRepository restaurantRepository, BoutiqueRepository boutiqueRepository, MarqueteurRepository marqueteurRepository, StationServiceRepository stationServiceRepository) {
         this.restaurantRepository = restaurantRepository;
         this.boutiqueRepository = boutiqueRepository;
         this.marqueteurRepository = marqueteurRepository;
+        this.stationServiceRepository = stationServiceRepository;
     }
     /**
      * Convertit une entité en DTO de réponse
@@ -226,7 +230,7 @@ public class TransactionMapper {
             // Ignore si le setter n'existe pas
         }
         try {
-            entity.setStationService(request.getStationservice());
+            entity.setStationService(stationServiceRepository.findByTrackingId(UUID.fromString(request.getStationServiceTrackingId())).orElseThrow(() -> new RuntimeException("Station service non trouvé")));
         } catch (Exception e) {
             // Ignore si le setter n'existe pas
         }
@@ -290,7 +294,7 @@ public class TransactionMapper {
             // Ignore si le setter n'existe pas
         }
         try {
-            entity.setStationService(request.getStationservice());
+            entity.setStationService(stationServiceRepository.findByTrackingId(UUID.fromString(request.getStationServiceTrackingId())).orElseThrow(() -> new RuntimeException("Station service non trouvé")));
         } catch (Exception e) {
             // Ignore si le setter n'existe pas
         }

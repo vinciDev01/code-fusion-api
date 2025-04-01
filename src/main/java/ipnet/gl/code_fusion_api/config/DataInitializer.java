@@ -38,18 +38,14 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) {
         logger.info("Initialisation des données de démarrage...");
         
-        // Création du rôle DIRECTEUR s'il n'existe pas
-        Role roleDirecteur = roleRepository.findByNom("DIRECTEUR")
-            .orElseGet(() -> {
-                logger.info("Création du rôle DIRECTEUR");
-                Role role = new Role();
-                role.setNom("DIRECTEUR");
-                role.setTrackingId(UUID.randomUUID());
-                return roleRepository.save(role);
-            });
+        // Création des rôles s'ils n'existent pas
+        Role roleDirecteur = createRoleIfNotExists("DIRECTEUR");
+        createRoleIfNotExists("ADMIN");
+        createRoleIfNotExists("GERANT");
+        createRoleIfNotExists("USER");
         
         // Vérification si l'utilisateur DIRECTEUR existe déjà
-        if (!userRepository.existsByNom("BENYO") && !userRepository.existsByEmail("directeur@codefusion.com")) {
+        if (!userRepository.existsByNom("BENYO") && !userRepository.existsByEmail("kokoubenyo01@gmail.com")) {
             logger.info("Création de l'utilisateur DIRECTEUR");
             
             // Création de l'utilisateur DIRECTEUR
@@ -68,5 +64,16 @@ public class DataInitializer implements CommandLineRunner {
         } else {
             logger.info("L'utilisateur DIRECTEUR existe déjà");
         }
+    }
+    
+    private Role createRoleIfNotExists(String roleName) {
+        return roleRepository.findByNom(roleName)
+            .orElseGet(() -> {
+                logger.info("Création du rôle {}", roleName);
+                Role role = new Role();
+                role.setNom(roleName);
+                role.setTrackingId(UUID.randomUUID());
+                return roleRepository.save(role);
+            });
     }
 } 

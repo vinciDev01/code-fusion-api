@@ -29,10 +29,10 @@ public class TransactionResponse {
     private String description;
     private TypeTransaction type;
     private StatutTransaction statut;
-    private StationService stationService;
-    private Restaurant restaurant;
-    private Boutique boutique;
-    private Marqueteur marqueteur;
+    private StationServiceResponse stationService;
+    private RestaurantResponse restaurant;
+    private BoutiqueResponse boutique;
+    private MarqueteurResponse marqueteur;
     
     // Attributs relationnels avec seulement les champs nécessaires
     // Relation ManyToOne - retourne uniquement les champs sélectionnés
@@ -107,32 +107,32 @@ public class TransactionResponse {
     public void setStatut(StatutTransaction statut) {
         this.statut = statut;
     }
-    public StationService getStationservice() {
+    public StationServiceResponse getStationservice() {
         return stationService;
     }
     
-    public void setStationservice(StationService stationService) {
+    public void setStationservice(StationServiceResponse stationService) {
         this.stationService = stationService;
     }
-    public Restaurant getRestaurant() {
+    public RestaurantResponse getRestaurant() {
         return restaurant;
     }
     
-    public void setRestaurant(Restaurant restaurant) {
+    public void setRestaurant(RestaurantResponse restaurant) {
         this.restaurant = restaurant;
     }
-    public Boutique getBoutique() {
+    public BoutiqueResponse getBoutique() {
         return boutique;
     }
     
-    public void setBoutique(Boutique boutique) {
+    public void setBoutique(BoutiqueResponse boutique) {
         this.boutique = boutique;
     }
-    public Marqueteur getMarqueteur() {
+    public MarqueteurResponse getMarqueteur() {
         return marqueteur;
     }
     
-    public void setMarqueteur(Marqueteur marqueteur) {
+    public void setMarqueteur(MarqueteurResponse marqueteur) {
         this.marqueteur = marqueteur;
     }
     

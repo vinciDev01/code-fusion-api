@@ -21,13 +21,20 @@ public class TransactionMapper {
     private final BoutiqueRepository boutiqueRepository;
     private final MarqueteurRepository marqueteurRepository;
     private final StationServiceRepository stationServiceRepository;
-    
+    private final StationServiceMapper stationServiceMapper;
+    private final RestaurantMapper restaurantMapper;
+    private final BoutiqueMapper boutiqueMapper;
+    private final MarqueteurMapper marqueteurMapper;
 
-    public TransactionMapper(RestaurantRepository restaurantRepository, BoutiqueRepository boutiqueRepository, MarqueteurRepository marqueteurRepository, StationServiceRepository stationServiceRepository) {
+    public TransactionMapper(RestaurantRepository restaurantRepository, BoutiqueRepository boutiqueRepository, MarqueteurRepository marqueteurRepository, StationServiceRepository stationServiceRepository, StationServiceMapper stationServiceMapper, RestaurantMapper restaurantMapper, BoutiqueMapper boutiqueMapper, MarqueteurMapper marqueteurMapper) {
         this.restaurantRepository = restaurantRepository;
         this.boutiqueRepository = boutiqueRepository;
         this.marqueteurRepository = marqueteurRepository;
         this.stationServiceRepository = stationServiceRepository;
+        this.stationServiceMapper = stationServiceMapper;
+        this.restaurantMapper = restaurantMapper;
+        this.boutiqueMapper = boutiqueMapper;
+        this.marqueteurMapper = marqueteurMapper;
     }
     /**
      * Convertit une entité en DTO de réponse
@@ -74,22 +81,22 @@ public class TransactionMapper {
             // Ignore si le getter n'existe pas
         }
         try {
-            response.setStationservice(entity.getStationService());
+            response.setStationservice(stationServiceMapper.toResponse(entity.getStationService()));
         } catch (Exception e) {
             // Ignore si le getter n'existe pas
         }
         try {
-            response.setRestaurant(entity.getRestaurant());
+            response.setRestaurant(restaurantMapper.toResponse(entity.getRestaurant()));
         } catch (Exception e) {
             // Ignore si le getter n'existe pas
         }
         try {
-            response.setBoutique(entity.getBoutique());
+            response.setBoutique(boutiqueMapper.toResponse(entity.getBoutique()));
         } catch (Exception e) {
             // Ignore si le getter n'existe pas
         }
         try {
-            response.setMarqueteur(entity.getMarqueteur());
+            response.setMarqueteur(marqueteurMapper.toResponse(entity.getMarqueteur()));
         } catch (Exception e) {
             // Ignore si le getter n'existe pas
         }

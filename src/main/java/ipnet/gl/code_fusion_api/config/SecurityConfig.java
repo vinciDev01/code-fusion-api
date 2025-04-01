@@ -3,6 +3,7 @@ package ipnet.gl.code_fusion_api.config;
 import ipnet.gl.code_fusion_api.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -37,8 +38,57 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/api/auth/**", "/api/roles").permitAll()
+                // Endpoints publics
+                .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/","/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                
+                // Endpoints réservés au DIRECTEUR
+                .requestMatchers("/api/users/**").hasRole("DIRECTEUR")
+                .requestMatchers("/api/roles/**").hasRole("DIRECTEUR")
+                
+                // Gestion des produits
+                .requestMatchers(HttpMethod.GET, "/api/produits/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/produits/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/produits/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/produits/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                
+                // Gestion des catégories
+                .requestMatchers(HttpMethod.GET, "/api/categories/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/categories/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/categories/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/categories/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                
+                // Gestion des marqueteurs
+                .requestMatchers(HttpMethod.GET, "/api/marqueteurs/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/marqueteurs/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/marqueteurs/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/marqueteurs/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                
+                // Gestion des boutiques
+                .requestMatchers(HttpMethod.GET, "/api/boutiques/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/boutiques/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/boutiques/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/boutiques/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                
+                // Gestion des stations service
+                .requestMatchers(HttpMethod.GET, "/api/stationservices/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/stationservices/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/stationservices/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/stationservices/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                
+                // Gestion des restaurants
+                .requestMatchers(HttpMethod.GET, "/api/restaurants/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/restaurants/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/restaurants/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/restaurants/**").hasAnyRole("DIRECTEUR", "ADMIN")
+                
+                // Transactions - lecture pour tous les utilisateurs authentifiés
+                .requestMatchers(HttpMethod.GET, "/api/transactions/**").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/transactions/**").hasAnyRole("DIRECTEUR", "ADMIN", "GERANT")
+                .requestMatchers(HttpMethod.PUT, "/api/transactions/**").hasAnyRole("DIRECTEUR", "ADMIN", "GERANT")
+                .requestMatchers(HttpMethod.DELETE, "/api/transactions/**").hasRole("DIRECTEUR")
+                
+                // Par défaut, toute autre requête nécessite une authentification
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

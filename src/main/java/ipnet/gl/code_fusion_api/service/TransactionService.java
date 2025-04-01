@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import ipnet.gl.code_fusion_api.dto.request.TransactionRequest;
 import ipnet.gl.code_fusion_api.dto.response.TransactionResponse;
+import ipnet.gl.code_fusion_api.enums.StatutTransaction;
 
 public interface TransactionService {
     
@@ -19,4 +20,6 @@ public interface TransactionService {
     List<TransactionResponse> findAll();
     
     List<TransactionResponse> search(String term);
+
+    TransactionResponse changeStatus(UUID trackingId, StatutTransaction status);
 } 

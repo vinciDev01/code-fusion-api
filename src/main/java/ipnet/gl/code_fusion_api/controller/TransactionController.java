@@ -11,6 +11,7 @@ import ipnet.gl.code_fusion_api.dto.response.TransactionResponse;
 import ipnet.gl.code_fusion_api.service.TransactionService;
 import ipnet.gl.code_fusion_api.utils.ApiResponse;
 import ipnet.gl.code_fusion_api.entity.Transaction;
+import ipnet.gl.code_fusion_api.enums.StatutTransaction;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -50,5 +51,11 @@ public class TransactionController {
     public ResponseEntity<ApiResponse<List<TransactionResponse>>> findAll() {
         List<TransactionResponse> responses = service.findAll();
         return ResponseEntity.ok(new ApiResponse<>("Transactions found successfully", responses));
+    }
+
+    @PutMapping("/{trackingId}/{status}")
+    public ResponseEntity<ApiResponse<TransactionResponse>> changeStatus(@PathVariable UUID trackingId, @PathVariable StatutTransaction status) {
+        TransactionResponse response = service.changeStatus(trackingId, status);
+        return ResponseEntity.ok(new ApiResponse<>("Transaction status updated successfully", response));
     }
 } 

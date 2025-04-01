@@ -1,5 +1,6 @@
 package ipnet.gl.code_fusion_api.service.impl;
 
+import ipnet.gl.code_fusion_api.enums.StatutTransaction;
 import ipnet.gl.code_fusion_api.enums.TypeTransaction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -99,4 +100,16 @@ public class TransactionServiceImpl implements TransactionService {
                 .collect(Collectors.toList());
         }
     }
+
+    @Override
+    public TransactionResponse changeStatus(UUID trackingId, StatutTransaction status) {
+        Transaction entity = repository.findByTrackingId(trackingId)
+            .orElseThrow(() -> new ResourceNotFoundException("Transaction", "trackingId", trackingId));
+        
+        entity.setStatut(status);
+        Transaction updatedEntity = repository.save(entity);
+        return mapper.toResponse(updatedEntity);
+    }
+    
+
 } 

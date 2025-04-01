@@ -31,6 +31,9 @@ public class RestaurantMapper {
         
         // Métadonnées si disponibles
         try {
+            response.setNom(entity.getNom());
+            response.setAdresse(entity.getAdresse());
+            response.setTelephone(entity.getTelephone());
             response.setCreatedAt(entity.getCreatedAt());
             response.setUpdatedAt(entity.getUpdatedAt());
         } catch (Exception e) {
@@ -50,7 +53,10 @@ public class RestaurantMapper {
         }
         
         Restaurant entity = new Restaurant();
-        
+        entity.setNom(request.getNom());
+        entity.setAdresse(request.getAdresse());
+        entity.setTelephone(request.getTelephone());
+        entity.setTrackingId(UUID.randomUUID());
         // Mapping des attributs standard
         
         return entity;
@@ -66,6 +72,10 @@ public class RestaurantMapper {
         }
         
         // Mise à jour des attributs non-ID
+        entity.setNom(request.getNom());
+        entity.setAdresse(request.getAdresse());
+        entity.setTelephone(request.getTelephone());
+        entity.setTrackingId(request.getTrackingId());
     }
     
     /**

@@ -27,6 +27,11 @@ public class BoutiqueMapper {
         
         // Mapping des attributs standard
         try {
+            response.setNom(entity.getNom());
+            response.setAdresse(entity.getAdresse());
+            response.setTelephone(entity.getTelephone());
+            response.setCreatedAt(entity.getCreatedAt());
+            response.setUpdatedAt(entity.getUpdatedAt());
             response.setTrackingId(entity.getTrackingId());
         } catch (Exception e) {
             // Ignore si le getter n'existe pas
@@ -55,7 +60,10 @@ public class BoutiqueMapper {
         }
         
         Boutique entity = new Boutique();
-        
+        entity.setNom(request.getNom());
+        entity.setAdresse(request.getAdresse());
+        entity.setTelephone(request.getTelephone());
+        entity.setTrackingId(UUID.randomUUID());
         // Mapping des attributs standard
         
         return entity;
@@ -71,6 +79,10 @@ public class BoutiqueMapper {
         }
         
         // Mise à jour des attributs non-ID
+        entity.setNom(request.getNom());
+        entity.setAdresse(request.getAdresse());
+        entity.setTelephone(request.getTelephone());
+        entity.setTrackingId(request.getTrackingId());
     }
     
     /**

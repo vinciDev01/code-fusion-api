@@ -11,7 +11,7 @@ import java.util.UUID;
 @Entity
 @Table
 @EntityListeners(AuditingEntityListener.class)
-public class Boutique extends AuditTable implements Serializable {
+public class Boutique extends PointDeVente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

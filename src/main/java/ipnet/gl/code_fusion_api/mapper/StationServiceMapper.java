@@ -27,7 +27,9 @@ public class StationServiceMapper {
         
         // Mapping des attributs standard
         try {
-            response.setTrackingId(entity.getTrackingId());
+            response.setNom(entity.getNom());
+            response.setAdresse(entity.getAdresse());
+            response.setTelephone(entity.getTelephone());
         } catch (Exception e) {
             // Ignore si le getter n'existe pas
         }
@@ -64,6 +66,10 @@ public class StationServiceMapper {
         // Mapping des attributs standard
         try {
             entity.setHavaAnnexe(request.getHavaannexe());
+            entity.setNom(request.getNom());
+            entity.setAdresse(request.getAdresse());
+            entity.setTelephone(request.getTelephone());
+            entity.setTrackingId(UUID.randomUUID());
         } catch (Exception e) {
             // Ignore si le setter n'existe pas
         }
@@ -83,6 +89,10 @@ public class StationServiceMapper {
         // Mise à jour des attributs non-ID
         try {
             entity.setHavaAnnexe(request.getHavaannexe());
+            entity.setNom(request.getNom());
+            entity.setAdresse(request.getAdresse());
+            entity.setTelephone(request.getTelephone());
+            entity.setTrackingId(request.getTrackingId());
         } catch (Exception e) {
             // Ignore si le setter n'existe pas
         }

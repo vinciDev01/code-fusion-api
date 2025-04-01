@@ -7,12 +7,14 @@ import java.util.List;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import ipnet.gl.code_fusion_api.entity.PointDeVente;
+
 /**
  * DTO pour retourner les données de l'entité Boutique au frontend.
  * Contient uniquement les données nécessaires pour la présentation,
  * et non toute la structure de l'entité d'origine pour des raisons de sécurité.
  */
-public class BoutiqueResponse {
+public class BoutiqueResponse extends PointDeVente {
     // Identifiant public exposé au frontend (jamais l'ID interne de la base de données)
     private UUID trackingId;
 

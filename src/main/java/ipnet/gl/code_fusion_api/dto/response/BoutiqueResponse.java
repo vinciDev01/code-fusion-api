@@ -2,12 +2,9 @@ package ipnet.gl.code_fusion_api.dto.response;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-import java.util.List;
-import java.util.List;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 import ipnet.gl.code_fusion_api.entity.PointDeVente;
+import ipnet.gl.code_fusion_api.entity.StationService;
 
 /**
  * DTO pour retourner les données de l'entité Boutique au frontend.
@@ -17,7 +14,7 @@ import ipnet.gl.code_fusion_api.entity.PointDeVente;
 public class BoutiqueResponse extends PointDeVente {
     // Identifiant public exposé au frontend (jamais l'ID interne de la base de données)
     private UUID trackingId;
-
+    private UUID stationId;
     // Métadonnées
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -34,9 +31,15 @@ public class BoutiqueResponse extends PointDeVente {
     public void setTrackingId(UUID trackingId) {
         this.trackingId = trackingId;
     }
-    
-    
-    
+
+    public UUID getStationId() {
+        return stationId;
+    }
+
+    public void setStationId(UUID stationId) {
+        this.stationId = stationId;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }

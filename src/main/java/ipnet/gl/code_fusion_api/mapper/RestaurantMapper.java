@@ -1,5 +1,6 @@
 package ipnet.gl.code_fusion_api.mapper;
 
+import ipnet.gl.code_fusion_api.repository.StationServiceRepository;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.UUID;
@@ -11,7 +12,12 @@ import ipnet.gl.code_fusion_api.entity.Restaurant;
 
 @Component
 public class RestaurantMapper {
-    
+    private final StationServiceRepository stationServiceRepository;
+
+    public RestaurantMapper(StationServiceRepository stationServiceRepository) {
+        this.stationServiceRepository = stationServiceRepository;
+    }
+
     /**
      * Convertit une entité en DTO de réponse
      * Ne transfère que les données nécessaires pour la présentation au frontend
@@ -36,6 +42,7 @@ public class RestaurantMapper {
             response.setTelephone(entity.getTelephone());
             response.setCreatedAt(entity.getCreatedAt());
             response.setUpdatedAt(entity.getUpdatedAt());
+            response.setStationId(entity.getStationService().getTrackingId().toString());
         } catch (Exception e) {
             // Ignorer si non disponible
         }
@@ -57,6 +64,8 @@ public class RestaurantMapper {
         entity.setAdresse(request.getAdresse());
         entity.setTelephone(request.getTelephone());
         entity.setTrackingId(UUID.randomUUID());
+        entity.setStationService(stationServiceRepository.findByTrackingId(UUID.fromString(request.getTrackingIdStation())).orElseThrow(() -> new RuntimeException("Station service non trouvé")));
+
         // Mapping des attributs standard
         
         return entity;

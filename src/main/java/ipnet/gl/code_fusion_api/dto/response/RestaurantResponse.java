@@ -17,7 +17,7 @@ import ipnet.gl.code_fusion_api.entity.PointDeVente;
 public class RestaurantResponse extends PointDeVente {
     // Identifiant public exposé au frontend (jamais l'ID interne de la base de données)
     private UUID trackingId;
-    
+    private String stationId;
     // Métadonnées
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -34,9 +34,15 @@ public class RestaurantResponse extends PointDeVente {
     public void setTrackingId(UUID trackingId) {
         this.trackingId = trackingId;
     }
-    
-    
-    
+
+    public String getStationId() {
+        return stationId;
+    }
+
+    public void setStationId(String stationId) {
+        this.stationId = stationId;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }

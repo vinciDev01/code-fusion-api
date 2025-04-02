@@ -1,5 +1,6 @@
 package ipnet.gl.code_fusion_api.mapper;
 
+import ipnet.gl.code_fusion_api.repository.StationServiceRepository;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +17,12 @@ public class BoutiqueMapper {
      * Convertit une entité en DTO de réponse
      * Ne transfère que les données nécessaires pour la présentation au frontend
      */
+    private final StationServiceRepository stationServiceRepository;
+
+    public BoutiqueMapper(StationServiceRepository stationServiceRepository) {
+        this.stationServiceRepository = stationServiceRepository;
+    }
+
     public BoutiqueResponse toResponse(Boutique entity) {
         if (entity == null) {
             return null;
@@ -33,6 +40,7 @@ public class BoutiqueMapper {
             response.setCreatedAt(entity.getCreatedAt());
             response.setUpdatedAt(entity.getUpdatedAt());
             response.setTrackingId(entity.getTrackingId());
+            response.setStationId(entity.getStationService().getTrackingId());
         } catch (Exception e) {
             // Ignore si le getter n'existe pas
         }
@@ -64,6 +72,7 @@ public class BoutiqueMapper {
         entity.setAdresse(request.getAdresse());
         entity.setTelephone(request.getTelephone());
         entity.setTrackingId(UUID.randomUUID());
+        entity.setStationService(stationServiceRepository.findByTrackingId(UUID.fromString(request.getTrackingIdStation())).orElseThrow(() -> new RuntimeException("Station service non trouvé")));
         // Mapping des attributs standard
         
         return entity;

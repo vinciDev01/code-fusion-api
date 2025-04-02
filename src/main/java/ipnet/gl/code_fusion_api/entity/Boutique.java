@@ -17,14 +17,11 @@ public class Boutique extends PointDeVente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private UUID trackingId;
+    @ManyToOne
+    @JoinColumn(name = "station_id",nullable = true)
+    private StationService stationService;
 
     public Boutique() {
-    }
-
-    public Boutique(Long id, UUID trackingId) {
-        this.id = id;
-        this.trackingId = trackingId;
     }
 
     public Long getId() {
@@ -35,11 +32,12 @@ public class Boutique extends PointDeVente implements Serializable {
         this.id = id;
     }
 
-    public UUID getTrackingId() {
-        return trackingId;
+
+    public StationService getStationService() {
+        return stationService;
     }
 
-    public void setTrackingId(UUID trackingId) {
-        this.trackingId = trackingId;
+    public void setStationService(StationService stationService) {
+        this.stationService = stationService;
     }
 }

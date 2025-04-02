@@ -14,10 +14,26 @@ import java.util.UUID;
  */
 public class BoutiqueRequest extends PointDeVente{
     
-    
+    private String trackingIdStation;
     // Constructeur par défaut
     public BoutiqueRequest() {
     }
-    
+
+    public BoutiqueRequest(String trackingIdStation) {
+        this.trackingIdStation = trackingIdStation;
+    }
     // Getters et setters
-} 
+
+    public BoutiqueRequest(UUID trackingId, String nom, String adresse, String telephone, boolean actif, String trackingIdStation) {
+        super(trackingId, nom, adresse, telephone, actif);
+        this.trackingIdStation = trackingIdStation;
+    }
+
+    public String getTrackingIdStation() {
+        return trackingIdStation;
+    }
+
+    public void setTrackingIdStation(String trackingIdStation) {
+        this.trackingIdStation = trackingIdStation;
+    }
+}

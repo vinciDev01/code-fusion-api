@@ -1,7 +1,7 @@
 package ipnet.gl.code_fusion_api.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Transient;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -13,10 +13,12 @@ public abstract class PointDeVente  extends AuditTable implements Serializable {
 
     private UUID trackingId;
 
+    @Column(unique = true)
     private String nom;
 
     private String adresse;
-
+    
+    @Column(name = "telephone")
     private String telephone;
 
     private boolean actif;
